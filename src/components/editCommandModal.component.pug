@@ -1,0 +1,37 @@
+.modal-body
+    .form-group
+        label Name
+        input.form-control(
+            type='text', 
+            placeholder="Name",
+            autofocus,
+            [(ngModel)]='command.name', 
+        )
+
+    .form-group
+        label Text
+        input.form-control(
+            type='text', 
+            placeholder="Text to be sent",
+            [(ngModel)]='command.text', 
+        )
+
+    .form-group
+        label Group
+        input.form-control(
+            type='text', 
+            placeholder="Ungrouped",
+            [(ngModel)]='command.group', 
+        )
+
+    .form-line
+        .header
+            .title Append '\n'
+            .description Automatically append a '\n' char to the end
+        toggle(
+            [(ngModel)]='command.appendCR',
+        )
+                    
+.modal-footer
+    button.btn.btn-outline-primary((click)='save()') Save
+    button.btn.btn-outline-danger((click)='cancel()') Cancel
