@@ -1,9 +1,10 @@
 {
   "name": "terminus-quick-cmds",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quick commands manager for Terminus",
   "keywords": [
-    "terminus-plugin", "quick-commands"
+    "terminus-plugin",
+    "quick-commands"
   ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
