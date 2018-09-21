@@ -10,7 +10,6 @@ import { TerminalTabComponent } from 'terminus-terminal';
 })
 export class QuickCmdsModalComponent {
     cmds: QuickCmds[]
-    childFolders: ICmdGroup[]
     quickCmd: string
     appendCR: boolean
     childGroups: ICmdGroup[]
@@ -48,6 +47,12 @@ export class QuickCmdsModalComponent {
         }
     }
 
+    _sendAll (cmd: string) {
+        for (let tab of this.app.tabs) {
+            this._send(tab, cmd)
+        } 
+    }
+
     close () {
         this.modalInstance.close()
         this.app.activeTab.emitFocused()
@@ -55,14 +60,30 @@ export class QuickCmdsModalComponent {
 
     send (cmd: QuickCmds, event: MouseEvent) {
         if (event.ctrlKey) {
-            for (let tab of this.app.tabs) {
-                this._send(tab, cmd.text + (cmd.appendCR ? "\n" : ""))
-            } 
+            this._sendAll(cmd.text + (cmd.appendCR ? "\n" : ""))
         }
         else {
             this._send(this.app.activeTab, cmd.text + (cmd.appendCR ? "\n" : "")) 
         }
         this.close()
+    }
+
+    clickGroup (group: ICmdGroup, event: MouseEvent) {
+        if (event.shiftKey) {
+            if (event.ctrlKey) {
+                for (let cmd of group.cmds) {
+                    this._sendAll(cmd.text + (cmd.appendCR ? "\n" : ""))
+                }
+            }
+            else {
+                for (let cmd of group.cmds) {
+                    this._send(this.app.activeTab, cmd.text + (cmd.appendCR ? "\n" : ""))
+                }
+            }
+        }
+        else {
+            this.groupCollapsed[group.name] = !this.groupCollapsed[group.name]
+        }
     }
 
     refresh () {
