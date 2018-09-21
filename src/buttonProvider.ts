@@ -28,7 +28,7 @@ export class ButtonProvider extends ToolbarButtonProvider {
             icon: this.domSanitizer.bypassSecurityTrustHtml(require('./icons/keyboard.svg')),
             weight: 5,
             title: 'Quick commands',
-            touchBarNSImage: 'NSTouchBarOpenInBrowserTemplate',
+            touchBarNSImage: 'NSTouchBarComposeTemplate',
             click: async () => {
                 this.activate()
             }
