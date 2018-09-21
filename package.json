@@ -1,6 +1,6 @@
 {
   "name": "terminus-quick-cmds",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Quick commands manager for Terminus",
   "keywords": [
     "terminus-plugin",
