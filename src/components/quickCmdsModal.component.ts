@@ -50,6 +50,7 @@ export class QuickCmdsModalComponent {
 
     close () {
         this.modalInstance.close()
+        this.app.activeTab.emitFocused()
     }
 
     send (cmd: QuickCmds, event: MouseEvent) {
