@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
-import { ConfigService, AppService, BaseTabComponent } from 'terminus-core'
+import { ConfigService, AppService, BaseTabComponent, SplitTabComponent } from 'terminus-core'
 import { QuickCmds, ICmdGroup } from '../api'
 import { TerminalTabComponent } from 'terminus-terminal';
 
@@ -33,13 +33,14 @@ export class QuickCmdsModalComponent {
     }
 
     quickSendAll() {
-        for (let tab of this.app.tabs) {
-            this._send(tab, this.quickCmd + (this.appendCR ? "\n" : ""))
-        }
+        this._sendAll(this.quickCmd + (this.appendCR ? "\n" : ""))
         this.close()
     }
 
     _send (tab: BaseTabComponent, cmd: string) {
+        if (tab instanceof SplitTabComponent) {
+            this._send((tab as SplitTabComponent).getFocusedTab(), cmd)
+        }
         if (tab instanceof TerminalTabComponent) {
             let currentTab = tab as TerminalTabComponent
             console.log("Sending " + cmd);
@@ -49,8 +50,14 @@ export class QuickCmdsModalComponent {
 
     _sendAll (cmd: string) {
         for (let tab of this.app.tabs) {
-            this._send(tab, cmd)
-        } 
+            if (tab instanceof SplitTabComponent) {
+                for (let subtab of (tab as SplitTabComponent).getAllTabs()) {
+                    this._send(subtab, cmd)
+                }
+            } else {
+                this._send(tab, cmd)
+            }
+        }
     }
 
     close () {
@@ -63,7 +70,7 @@ export class QuickCmdsModalComponent {
             this._sendAll(cmd.text + (cmd.appendCR ? "\n" : ""))
         }
         else {
-            this._send(this.app.activeTab, cmd.text + (cmd.appendCR ? "\n" : "")) 
+            this._send(this.app.activeTab, cmd.text + (cmd.appendCR ? "\n" : ""))
         }
         this.close()
     }
