@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { HotkeysService, ToolbarButtonProvider, IToolbarButton } from 'terminus-core'
 import { QuickCmdsModalComponent } from './components/quickCmdsModal.component'
@@ -8,7 +7,6 @@ import { QuickCmdsModalComponent } from './components/quickCmdsModal.component'
 export class ButtonProvider extends ToolbarButtonProvider {
     constructor (
         private ngbModal: NgbModal,
-        private domSanitizer: DomSanitizer,
         hotkeys: HotkeysService,
     ) {
         super()
@@ -25,7 +23,7 @@ export class ButtonProvider extends ToolbarButtonProvider {
 
     provide (): IToolbarButton[] {
         return [{
-            icon: this.domSanitizer.bypassSecurityTrustHtml(require('./icons/keyboard.svg')),
+            icon: require('./icons/keyboard.svg'),
             weight: 5,
             title: 'Quick commands',
             touchBarNSImage: 'NSTouchBarComposeTemplate',
