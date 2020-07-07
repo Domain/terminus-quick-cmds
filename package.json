@@ -23,7 +23,7 @@
     "apply-loader": "^2.0.0",
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^2.1.1",
-    "electron": "^1.6.11",
+    "electron": "^7.2.4",
     "node-sass": "^4.12.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
